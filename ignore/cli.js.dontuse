@@ -1,0 +1,27 @@
+(function($){
+	$.fn.cli = function(handler, prompt, effect){
+		if (!prompt) prompt = '&gt;&nbsp;';
+		if (!effect) effect = $.fn.text;
+		return this.each(function(){
+			var self = $(this);
+			function newline(){
+				self.
+				 append('<p class=input><span class=prompt>'+prompt+'</span><span  style=outline:none contenteditable></span></p>');
+				try {
+					$('[contenteditable]', self)[0].focus(); // focus only works on the element, not the jQuery object
+				}catch(e){
+					/* do nothing. IE throws and error if the focus cannot be set */
+				}
+			}
+			newline();
+			self.on('keydown', '[contenteditable]', function(evt){
+				if (evt.keyCode == 13){
+					$(this).removeAttr('contenteditable'); // IE needs special handling which jQuery provides
+					effect.call($('<p class=response>').appendTo(self),handler(this.textContent || this.innerText));
+					newline();
+					return false;
+				}
+			});
+		});
+	};
+})(jQuery);

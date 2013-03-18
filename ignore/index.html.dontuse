@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Joshua</title>
+		<link href='http://fonts.googleapis.com/css?family=Share+Tech+Mono' rel='stylesheet' type='text/css'>
+		<style>
+	
+		</style>
+		<script src="http://code.jquery.com/jquery-latest.js"></script>
+		<script src="cli.js"></script>
+	</head>
+	<body>
+		<div>
+			
+		</div>
+		<script>
+function type(text){
+  // based on http://onehackoranother.com/projects/jquery/jquery-grab-bag/text-effects.html typewriter effect
+  var span = $('<span>').appendTo(this).after('<span id="blinker" style="background: green">&nbsp;</span>');
+  // hack to hide the new prompt until we are done. It would be nice to have a real sleep function
+  var style = $('<style>p.input {visibility: hidden} p.input.old {visibility: visible}</style>').appendTo('head');
+  $('p.input').addClass('old');
+  var progress = 0;
+  var timer = setInterval (function(){
+    span.text(text.substr(0, progress++));
+     if (progress > text.length){
+      $('#blinker').remove();
+      style.remove();
+      $('[contenteditable]')[0].focus();
+      clearInterval(timer);
+     }
+  },100);
+}
+			$(document).ready(function(){
+				$('div').cli(function(text){
+					if (/thermonuclear/i.test(text)) return "Wouldn't you prefer a nice game of chess?";
+					if (/goal/i.test(text)) return "To win the game.";
+					if (/real/i.test(text)) return "What's the difference?";
+					if (Math.random() < 0.1) return "A strange game. The only winning move is not to play. How about a nice game of chess?";
+					return 'You wrote: '+text;
+				}, "/bin/bash # ", type);
+			});
+			$('body').on('click', function(){
+				// IE seems to lose the focus sometimes
+				$('[contenteditable]')[0].focus();
+			});
+		</script>
+	</body>
+</html>

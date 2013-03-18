@@ -1,0 +1,13 @@
+html{
+	height:100%:
+}
+body{
+	background-color: black;
+	height:100%;
+}
+#content{
+	color: white;
+	font-family: 'Share Tech Mono', sans-serif;
+	height:800px;
+	width:100%;
+}
