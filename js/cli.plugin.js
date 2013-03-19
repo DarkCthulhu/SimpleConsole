@@ -27,12 +27,12 @@
         init: function () {
             $(this.element).attr("contenteditable", "true");
             $(this.element).attr("spellcheck", "false");
-            this.registerReturnKey(this.element, this.options);
+            this.registerReturnKey(this.element, this.options, this);
         },
-        registerReturnKey: function (element, options) {
+        registerReturnKey: function (element, options, self) {
             $(element).bind('keydown', function(e) {
                 if(e.keyCode==13){
-                    e.preventDefault();
+                    e.preventDefault(); //necessary, or ie goes psycho with the contentEditable
                     var resultElem = $('#' + options.resultDiv);
                     if(!resultElem.length){
                         var d = document.createElement('div');
@@ -41,14 +41,20 @@
                             .prependTo($('body'));
                         resultElem = $('#' + options.resultDiv);
                     }
-                    //process the element here
-                    
-                    
                     //emulate terminal history, clear current line
-                    $(resultElem).append(options.prompt + $(element).text()+"<br/>");
+                    var command = $(element).text();
+                    $(resultElem).append(options.prompt + command +"<br/>");
                     $(element).text('');
+                    
+                    //process the command here
+                    self.processCommand(command, options);
                 }
             });
+        },
+        processCommand: function(command, options) {
+            
+        
+        
         }
     };
 
