@@ -17,6 +17,13 @@ $(function() {
     $('html').click(function(e){
         $('#interactive').focus();
     });
+    
+    //execute intro
+    $(function(){
+        $('#interactive').text("intro");
+        var e = jQuery.Event( 'keydown', { keyCode: 13 } );
+        $('#interactive').trigger(e);
+    });
 });
 
 function showInput(){

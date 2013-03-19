@@ -31,13 +31,12 @@
         init: function () {
             $(this.element).attr("contenteditable", "true");
             $(this.element).attr("spellcheck", "false");
-            this.registerReturnKey(this.element, this.options, this);
+            this.registerKeys(this.element, this.options, this);
         },
-        registerReturnKey: function (element, options, context) {
+        registerKeys: function (element, options, context) {
             $(element).bind('keydown', function(e) {
                 var resultElem = $('#' + options.resultDiv);
                 var historyPtr = 0;
-                
                 //handle return key-press
                 if(e.keyCode==13){
                     e.preventDefault(); //necessary, or IE goes psycho with the contentEditable
@@ -58,14 +57,8 @@
                     context.history.push(command);
                     context.historyPtr = 0;
                     
-                    //process the command here (cli.commands.js does the actual processing)
-                    var cliH = new cliHandler();
-                    var output = cliH.execute(command, resultElem);
-                    
-                    if(typeof output !== "undefined"){
-                        //$(resultElem).append(context.addNewLine(output)); //straightforward way
-                        context.teleType(resultElem, output + "\n");
-                    }
+                    //handle command
+                    context.executecmd(command, context);
                 //handle up-key press
                 }else if(e.keyCode==38){
                     e.preventDefault();
@@ -98,6 +91,15 @@
         },
         addNewLine: function(stringVal){
             return stringVal + "<br/>";
+        },
+        executecmd: function(command, context){
+            //process the command here (cli.commands.js does the actual processing)
+            var resultElem = $('#' + context.options.resultDiv);
+            var cliH = new cliHandler();
+            var output = cliH.execute(command, resultElem);
+            if(typeof output !== "undefined"){
+                context.teleType(resultElem, output + "\n");
+            }
         }
     };
 

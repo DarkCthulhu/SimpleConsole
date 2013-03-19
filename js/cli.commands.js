@@ -20,7 +20,8 @@ cliHandler.prototype.execute = function(command, resultElem){
         $(resultElem).remove();
         return;
     }
-    if (/cat/i.test(command)) return "Meow!";
+    else if (/cat/i.test(command)) return "Meow!";
     else if (/ls/i.test(command)) return "Ain't nobody got time fo dat!";
+    else if (/intro/i.test(command)) return "Shoo!";
     else return "Yea... no! it ain't ready."
 };
