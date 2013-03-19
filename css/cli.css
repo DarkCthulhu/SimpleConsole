@@ -1,13 +1,28 @@
+/*
+ *  Project: cli
+ *  Author: DarkCthulhu
+ *  License: MIT
+ */
+ 
+*{
+    outline:none;
+} 
 html{
-	height:100%:
+    color: white;
+    overflow:hidden;
 }
 body{
 	background-color: black;
-	height:100%;
+    overflow:hidden;
 }
-#content{
+div,p{
+    display: block;
+}
+
+.cli{
 	color: white;
+    margin: 0px auto;
 	font-family: 'Share Tech Mono', sans-serif;
-	height:800px;
-	width:100%;
+    min-height:10px;
+    width:100%;
 }
