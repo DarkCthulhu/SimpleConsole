@@ -32,6 +32,7 @@
         registerReturnKey: function (element, options) {
             $(element).bind('keydown', function(e) {
                 if(e.keyCode==13){
+                    e.preventDefault();
                     var resultElem = $('#' + options.resultDiv);
                     if(!resultElem.length){
                         var d = document.createElement('div');

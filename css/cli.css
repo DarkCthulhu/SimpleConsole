@@ -17,6 +17,8 @@ body{
 }
 div,p{
     display: block;
+    padding: 0px; 
+    border: 0px; 
 }
 
 .cli{
@@ -25,4 +27,10 @@ div,p{
 	font-family: 'Share Tech Mono', sans-serif;
     min-height:10px;
     width:100%;
+}
+
+#interactive{
+    display:inline;
+    max-height: 20px;
+    
 }
