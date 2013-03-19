@@ -6,9 +6,10 @@
 
 $(function() {
     //document ready
+    $('#interactive').focus();
     $('#interactive').setupCli({
         resultDiv: "result",
-        prompt: $('#input').text(),
+        prompt: $('#input').text(), //same prompt to be passed in
         cssClass: "cli"
     });
     

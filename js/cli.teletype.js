@@ -8,7 +8,7 @@
 $.fn.teletype = function(opts){
     var $this = this,
         defaults = {
-            animDelay: 500
+            animDelay: 5
         },
         settings = $.extend(defaults, opts);
     
@@ -16,8 +16,10 @@ $.fn.teletype = function(opts){
     $.each(settings.text.split(''), function(i, letter){
         setTimeout(function(){
             $this.html($this.html() + letter);
-            if(i == settings.text.length - 1){ //really horrible way to do it, kill me now
+            if(letter === '\n'){
                 $this.html($this.html() + "<br/>");
+            }
+            if(i == settings.text.length - 1){ //really horrible way to do it, kill me now
                 showInput();
             }
         }, settings.animDelay * i);

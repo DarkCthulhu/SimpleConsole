@@ -17,6 +17,10 @@
     function Plugin(element, options) {
         this.element = element;
         this.options = $.extend({}, defaults, options);
+        //history
+        this.history = new Array();
+        this.historyPtr = 0;
+        
         this._defaults = defaults;
         this._name = pluginName;
         this.init();
@@ -31,9 +35,12 @@
         },
         registerReturnKey: function (element, options, context) {
             $(element).bind('keydown', function(e) {
+                var resultElem = $('#' + options.resultDiv);
+                var historyPtr = 0;
+                
+                //handle return key-press
                 if(e.keyCode==13){
-                    e.preventDefault(); //necessary, or ie goes psycho with the contentEditable
-                    var resultElem = $('#' + options.resultDiv);
+                    e.preventDefault(); //necessary, or IE goes psycho with the contentEditable
                     if(!resultElem.length){
                         var d = document.createElement('div');
                         $(d).addClass(options.cssClass)
@@ -41,29 +48,44 @@
                             .prependTo($('body'));
                         resultElem = $('#' + options.resultDiv);
                     }
-                    //emulate terminal history, clear current line
+                    
+                    //clear current line
                     var command = $(element).text();
                     $(resultElem).append(context.addNewLine(options.prompt + command));
                     $(element).text('');
                     
-                    //process the command here
-                    var output = context.processCommand(command, options, resultElem);
+                    //add to history
+                    context.history.push(command);
+                    context.historyPtr = 0;
+                    
+                    //process the command here (cli.commands.js does the actual processing)
+                    var cliH = new cliHandler();
+                    var output = cliH.execute(command, resultElem);
+                    
                     if(typeof output !== "undefined"){
                         //$(resultElem).append(context.addNewLine(output)); //straightforward way
-                        context.teleType(resultElem, output);
+                        context.teleType(resultElem, output + "\n");
                     }
+                //handle up-key press
+                }else if(e.keyCode==38){
+                    e.preventDefault();
+                    //don't go beyond the size of history array
+                    if(context.historyPtr < context.history.length){
+                        $(element).text(context.history[context.history.length - (context.historyPtr++) - 1]);
+                    }
+                    if(context.historyPtr >= context.history.length)
+                        context.historyPtr = context.history.length - 1;
+                //handle down-key press
+                }else if(e.keyCode==40){
+                    e.preventDefault();
+                    //don't go beyond the size of history array
+                    if(context.historyPtr >= 0){
+                        $(element).text(context.history[context.history.length - (context.historyPtr--) - 1]);
+                    }
+                    if(context.historyPtr < 0)
+                        context.historyPtr = 0;
                 }
             });
-        },
-        processCommand: function(command, options, resultElem) {
-            if (/clear/i.test(command)){
-                $(resultElem).remove();
-                return;
-            }
-            if (/cat/i.test(command)) return "Meow!";
-            else if (/ls/i.test(command)) return "Ain't nobody got time fo dat!";
-            else return "Yea... no! it ain't ready."
-            
         },
         teleType: function(resultElem, content){
             //change anim-delay according to length of content
