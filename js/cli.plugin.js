@@ -29,7 +29,7 @@
             $(this.element).attr("spellcheck", "false");
             this.registerReturnKey(this.element, this.options, this);
         },
-        registerReturnKey: function (element, options, self) {
+        registerReturnKey: function (element, options, context) {
             $(element).bind('keydown', function(e) {
                 if(e.keyCode==13){
                     e.preventDefault(); //necessary, or ie goes psycho with the contentEditable
@@ -43,19 +43,39 @@
                     }
                     //emulate terminal history, clear current line
                     var command = $(element).text();
-                    $(resultElem).append(options.prompt + command +"<br/>");
+                    $(resultElem).append(context.addNewLine(options.prompt + command));
                     $(element).text('');
                     
                     //process the command here
-                    $(resultElem).append(self.processCommand(command, options) + "<br/>");
+                    var output = context.processCommand(command, options, resultElem);
+                    if(typeof output !== "undefined"){
+                        //$(resultElem).append(context.addNewLine(output)); //straightforward way
+                        context.teleType(resultElem, output);
+                    }
                 }
             });
         },
-        processCommand: function(command, options) {
+        processCommand: function(command, options, resultElem) {
+            if (/clear/i.test(command)){
+                $(resultElem).remove();
+                return;
+            }
             if (/cat/i.test(command)) return "Meow!";
             else if (/ls/i.test(command)) return "Ain't nobody got time fo dat!";
             else return "Yea... no! it ain't ready."
-        
+            
+        },
+        teleType: function(resultElem, content){
+            //change anim-delay according to length of content
+            $(function(){
+                $(resultElem).teletype({
+                    animDelay: 1000/content.length,
+                    text: content
+                });
+            });
+        },
+        addNewLine: function(stringVal){
+            return stringVal + "<br/>";
         }
     };
 

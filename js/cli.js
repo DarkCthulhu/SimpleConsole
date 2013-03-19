@@ -17,3 +17,10 @@ $(function() {
         $('#interactive').focus();
     });
 });
+
+function showInput(){
+    $('#input').show();
+}
+function hideInput(){
+    $('#input').hide();
+}
