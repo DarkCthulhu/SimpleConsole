@@ -47,13 +47,14 @@
                     $(element).text('');
                     
                     //process the command here
-                    self.processCommand(command, options);
+                    $(resultElem).append(self.processCommand(command, options) + "<br/>");
                 }
             });
         },
         processCommand: function(command, options) {
-            
-        
+            if (/cat/i.test(command)) return "Meow!";
+            else if (/ls/i.test(command)) return "Ain't nobody got time fo dat!";
+            else return "Yea... no! it ain't ready."
         
         }
     };
