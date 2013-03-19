@@ -68,6 +68,7 @@
                 
                     //scroll to bottom
                     $("html, body").animate({ scrollTop: $(document).height() }, "slow");
+                    $(element).blur().focus()
                 //handle up-key press
                 }else if(e.keyCode==38){
                     e.preventDefault();
@@ -110,7 +111,7 @@
                 if(output.status == 0)
                     context.teleType(resultElem, output.response + "\n"); //with effects 
                 else
-                    $(resultElem).append(context.addNewLine(output.response)); //without effects
+                    $(resultElem).hide().append(context.addNewLine(output.response)).fadeIn('slow'); //without effects
             }
         }
     };

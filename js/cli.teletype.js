@@ -21,6 +21,8 @@ $.fn.teletype = function(opts){
             }
             if(i == settings.text.length - 1){ //really horrible way to do it, kill me now
                 showInput();
+                //scroll to bottom
+                $('#interactive').blur().focus()
             }
         }, settings.animDelay * i);
         
