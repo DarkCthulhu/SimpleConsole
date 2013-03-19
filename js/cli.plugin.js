@@ -40,6 +40,12 @@
                 //handle return key-press
                 if(e.keyCode==13){
                     e.preventDefault(); //necessary, or IE goes psycho with the contentEditable
+                    
+                    //if made invisible, during output, do nothing
+                    if($(element).is(":hidden"))
+                        return;
+                        
+                    
                     if(!resultElem.length){
                         var d = document.createElement('div');
                         $(d).addClass(options.cssClass)
@@ -59,6 +65,9 @@
                     
                     //handle command
                     context.executecmd(command, context);
+                
+                    //scroll to bottom
+                    $("html, body").animate({ scrollTop: $(document).height() }, "slow");
                 //handle up-key press
                 }else if(e.keyCode==38){
                     e.preventDefault();
@@ -98,7 +107,10 @@
             var cliH = new cliHandler();
             var output = cliH.execute(command, resultElem);
             if(typeof output !== "undefined"){
-                context.teleType(resultElem, output + "\n");
+                if(output.status == 0)
+                    context.teleType(resultElem, output.response + "\n"); //with effects 
+                else
+                    $(resultElem).append(context.addNewLine(output.response)); //without effects
             }
         }
     };

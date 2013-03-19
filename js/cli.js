@@ -9,7 +9,7 @@ $(function() {
     $('#interactive').focus();
     $('#interactive').setupCli({
         resultDiv: "result",
-        prompt: $('#input').text(), //same prompt to be passed in
+        prompt: "~#&nbsp;",
         cssClass: "cli"
     });
     
