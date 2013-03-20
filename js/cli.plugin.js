@@ -111,7 +111,7 @@
                 if(output.status == 0)
                     context.teleType(resultElem, output.response + "\n"); //with effects 
                 else
-                    $(resultElem).hide().append(context.addNewLine(output.response)).fadeIn('slow'); //without effects
+                    $(resultElem).append(context.addNewLine(output.response)); //without effects
             }
         }
     };
