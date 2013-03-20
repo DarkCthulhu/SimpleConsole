@@ -1,5 +1,3 @@
-<div>
 <?php
-    echo system('ls -ltr');
+    system('ls -ltr');
 ?>
-</div>
