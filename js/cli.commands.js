@@ -26,7 +26,7 @@ cliHandler.prototype.execute = function(command, resultElem){
     else if(/^ls$/.test(command)){
         jQuery.ajaxSetup({async:false});
         var response = "";
-        $.get("pages/controller.php", function(data) {           
+        $.get("pages/cli.php", function(data) {       //pass query parameters here    
             response = {status: 1, response: data};
         });
         return response;
