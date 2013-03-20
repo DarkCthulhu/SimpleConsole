@@ -109,11 +109,17 @@
             var cliH = new cliHandler();
             var output = cliH.execute(command, resultElem);
             if(typeof output !== "undefined"){
-                if(output.status == 0)
+                if(output.status == 0){
                     context.teleType(resultElem, output.response + "\n"); //with effects 
-                else
-                    $(resultElem).append(context.addNewLine(output.response)); //without effects
+                }else{
+                    var response = context.nl2br(output.response);
+                    $(resultElem).append(context.addNewLine(response)); //without effects
+                }
             }
+        },
+        nl2br: function(str, is_xhtml) {   
+            var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br />' : '<br>';    
+            return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1'+ breakTag +'$2');
         }
     };
 

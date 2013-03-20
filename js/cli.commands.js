@@ -23,6 +23,13 @@ cliHandler.prototype.execute = function(command, resultElem){
         $(resultElem).remove();
         return;
     }
-    else if (/intro/i.test(command)) return {status: 1, response: "<img src='http://1.bp.blogspot.com/-dw9g-zmr8oc/T7Eq80cJ7AI/AAAAAAAAB-E/kYY2dcl2SkI/s1600/0113fox1.jpeg'/>"};
+    else if(/^ls$/.test(command)){
+        jQuery.ajaxSetup({async:false});
+        var response = "";
+        $.get("pages/controller.php", function(data) {           
+            response = {status: 1, response: data};
+        });
+        return response;
+    }else if (/^intro$/.test(command)) return {status: 1, response: "<img src='http://1.bp.blogspot.com/-dw9g-zmr8oc/T7Eq80cJ7AI/AAAAAAAAB-E/kYY2dcl2SkI/s1600/0113fox1.jpeg'/>"};
     else return {status: 0, response: command + ": command not found"}
 };
