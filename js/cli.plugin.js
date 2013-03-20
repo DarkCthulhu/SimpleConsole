@@ -60,7 +60,8 @@
                     $(element).text('');
                     
                     //add to history
-                    context.history.push(command);
+                    if(command.trim().length > 0)
+                        context.history.push(command);
                     context.historyPtr = 0;
                     
                     //handle command
