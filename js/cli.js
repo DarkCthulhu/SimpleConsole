@@ -13,8 +13,6 @@ $(function() {
         cssClass: "cli"
     });
     
-    cliInstance.do_stuff();
-    
     //body click handler: any click brings cli into focus
     $('html').click(function(e){
         $('#interactive').focus();
