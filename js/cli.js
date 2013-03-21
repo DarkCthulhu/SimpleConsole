@@ -7,11 +7,13 @@
 $(function() {
     //document ready
     $('#interactive').focus();
-    $('#interactive').setupCli({
+    var cliInstance = $('#interactive').setupCli({
         resultDiv: "result",
         prompt: "~#&nbsp;",
         cssClass: "cli"
     });
+    
+    cliInstance.do_stuff();
     
     //body click handler: any click brings cli into focus
     $('html').click(function(e){
