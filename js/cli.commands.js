@@ -24,12 +24,23 @@ cliHandler.prototype.execute = function(command, resultElem){
         return;
     }
     else if(/^ls$/.test(command)){
-        jQuery.ajaxSetup({async:false});
         var response = "";
-        $.get("pages/cli.php", function(data) {       //pass query parameters here    
-            response = {status: 1, response: data};   //change to $.ajax()
+        var request = $.ajax({
+            url: "content/cli.php",
+            type: "GET",
+            data: {cmd: command},
+            async: false,
+            success: function(res){
+                response = res;
+            }
         });
-        return response;
+        
+        // jQuery.ajaxSetup({async:false});
+        // var response = "";
+        // $.get("content/cli.php", function(data) {       //pass query parameters here    
+            // response = {status: 1, response: data};   //change to $.ajax()
+        // });
+        return {status:1, response: response};
     }else if (/^intro$/.test(command)) return {status: 1, response: "the beginning..."};
     else return {status: 0, response: command + ": command not found"}
 };

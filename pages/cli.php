@@ -1,7 +1,0 @@
-<?php
-    
-    
-    
-    
-    system('ls -ltr');
-?>

@@ -19,8 +19,7 @@
 	</head>
 	<body>
     <?php
-        //result block #TODO: Just include file into this space
-        echo "<div id='result'>TestEntry</div>";
+        //echo "<div id='result' class='cli'><br/></div>";
     ?>
     
     
