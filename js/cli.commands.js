@@ -30,7 +30,7 @@ cliHandler.prototype.execute = function(command, resultElem){
             response = {status: 1, response: data};
         });
         return response;
-    }else if (/^intro$/.test(command)) return {status: 1, response: "Hi, welcome to the Simple Terminal JQuery plguin"};
+    }else if (/^intro$/.test(command)) return {status: 1, response: "Hi, welcome to the Simple Terminal JQuery plugin"};
     else return {status: 0, response: command + ": command not found"}
 };
  
